@@ -62,6 +62,7 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "w", lazy.spawn("firefox")),
     Key([mod], "t", lazy.spawn("telegram-desktop")),
+    Key([mod], "e", lazy.spawn("thunar")),    
     Key([mod], "y", lazy.spawn("whatsapp-nativefier")),
     Key([mod], "v", lazy.spawn("code")),
     Key([mod], "c", lazy.spawn("xfce4-popup-clipman")),
