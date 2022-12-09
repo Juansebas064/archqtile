@@ -6,6 +6,8 @@
 !/picom
 !/qtile
 !.gitignore
+!.oh-my-zsh
+!install
 !.zshrc
 !.fonts
 !snow.jpg
