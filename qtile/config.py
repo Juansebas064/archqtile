@@ -29,14 +29,19 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile import hook
-
 import subprocess
+
+
+LAPTOP = True if subprocess.call("[ -d /proc/acpi/button/lid ] && true || false",shell=True) == 0 else False
+mrg=11
+
 
 @hook.subscribe.startup_once
 def autostart():
     processes = [
         ["/usr/lib/lxpolkit/lxpolkit"],
         ["nm-applet"],
+        ["pacman", "-Qu"],
         ["picom"],
         ["xfce4-clipman"],
         ["nitrogen", "--restore"],
@@ -46,7 +51,6 @@ def autostart():
     for p in processes:
         subprocess.Popen(p)
 
-
 mod = "mod4"
 terminal = guess_terminal() 
 
@@ -55,6 +59,7 @@ keys = [
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
 
     # Keybindings for open applications
+    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "w", lazy.spawn("firefox")),
     Key([mod], "t", lazy.spawn("telegram-desktop")),
     Key([mod], "y", lazy.spawn("whatsapp-nativefier")),
@@ -66,7 +71,8 @@ keys = [
     Key([mod], "d", lazy.spawn("discord")),
     Key([mod], "u", lazy.spawn("sh /home/juan/MinecraftServerSync.sh")),
     Key([], "Print", lazy.spawn("xfce4-screenshooter -f -c")),
-
+    Key(["control"], "Print", lazy.spawn("xfce4-screenshooter -w -c")),
+    Key(["shift"], "Print", lazy.spawn("xfce4-screenshooter -r -c")),
 
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
@@ -74,12 +80,14 @@ keys = [
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
     Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
+
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
@@ -87,6 +95,7 @@ keys = [
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
     # Unsplit = 1 window displayed, like Max layout, but still with
@@ -97,7 +106,7 @@ keys = [
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
     ),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
@@ -106,7 +115,7 @@ keys = [
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
 ]
 
-groups = [Group(i) for i in "123456789"]
+groups = [Group(i) for i in "1234567"]
 
 for i in groups:
     keys.extend(
@@ -131,8 +140,6 @@ for i in groups:
             #     desc="move focused window to group {}".format(i.name)),
         ]
     )
-
-mrg=14
 
 layouts = [
     layout.Columns(
@@ -164,28 +171,46 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-screens = [
-    Screen(
-        bottom=bar.Bar(
-            [
+if LAPTOP:
+    screens = [
+        Screen(
+            bottom=bar.Bar(
+                [
+                    widget.CurrentLayoutIcon(scale=0.4),
+                    widget.Battery(
+                        discharge_char='-',
+                        charge_char='+',
+                        format='{char} {percent:2.0%} {watt:.2f}W',
+                        low_foreground='#d95850',
+                        foreground='#aa8deb'
+                    ),
+                    widget.WindowName(max_chars=40),
+                    widget.Prompt(),
+                    widget.GroupBox(highlight_method='block',),
+                    widget.Spacer(),
+                    widget.Memory(measure_mem='M',padding=10,foreground='#d95850'),
+                    widget.TextBox("~"),
+                    widget.Systray(padding=10,),
+                    widget.TextBox(" ~ "),
+                    widget.Clock(format="%d/%m/%Y  %H:%M - %A   "),
+                ],
+                40,
+                background = "#1a1d1f",
+                margin = [0,mrg,mrg,mrg],
+            ),
+        ),
+    ]
+else:
+    screens = [
+        Screen(
+            bottom=bar.Bar(
+                [
                 widget.CurrentLayoutIcon(scale=0.4),
                 widget.WindowCount(padding=5,fmt='{} |'),
                 widget.WindowName(max_chars=40),
                 widget.Prompt(),
-
-                #widget.Spacer(),
                 widget.GroupBox(highlight_method='block',),
                 widget.Spacer(),
-                #widget.Chord(
-                #    chords_colors={
-                #        "launch": ("#ff0000", "#ffffff"),
-                #    },
-                #    name_transform=lambda name: name.upper(),
-                #),
-                #widget.TextBox("default config", name="default"),
-                #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
                 widget.CheckUpdates(
                     distro='Arch',
                     initial_text='Checking updates...',
@@ -200,23 +225,13 @@ screens = [
                 widget.TextBox("~"),
                 widget.Systray(padding=10,),
                 widget.Clock(format="  ~   %d / %m / %Y   %H:%M  -  %A   "),
-            ],
-            40,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
-            background = "#1a1d1f",
-            margin = [0,mrg,mrg,mrg],
+                ],
+                40,
+                background = "#1a1d1f",
+                margin = [0,mrg,mrg,mrg],
+            ),
         ),
-        #top=bar.Bar(
-        #    [
-        #        #widget.DF(visible_on_warn=False,format='{p} - {r:.0f}%'),
-        #        widget.GroupBox(highlight_method='line',),
-
-        #    ],
-        #    30, 
-        #),
-    ),
-]
+    ]
 
 # Drag floating layouts.
 mouse = [
