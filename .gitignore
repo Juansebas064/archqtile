@@ -6,5 +6,6 @@
 !/picom
 !/qtile
 !.gitignore
+!.zshrc
 !.fonts
 !snow.jpg
