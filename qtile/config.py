@@ -51,8 +51,10 @@ def autostart():
     for p in processes:
         subprocess.Popen(p)
 
+
 mod = "mod4"
 terminal = guess_terminal() 
+
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -68,6 +70,7 @@ keys = [
     Key([mod], "c", lazy.spawn("xfce4-popup-clipman")),
     Key([mod], "g", lazy.spawn("gparted")),
     Key([mod], "i", lazy.spawn("idea")),
+    Key([mod], "o", lazy.spawn("/home/juan/.joplin/Joplin.AppImage %u")),
     Key([mod], "z", lazy.spawn("volumeicon")),
     Key([mod], "d", lazy.spawn("discord")),
     Key([mod], "u", lazy.spawn("sh /home/juan/MinecraftServerSync.sh")),
