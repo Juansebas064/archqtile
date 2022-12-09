@@ -66,7 +66,7 @@ keys = [
     Key([mod], "y", lazy.spawn("whatsapp-nativefier")),
     Key([mod], "v", lazy.spawn("code")),
     Key([mod], "c", lazy.spawn("xfce4-popup-clipman")),
-    Key([mod], "f", lazy.spawn("gparted")),
+    Key([mod], "g", lazy.spawn("gparted")),
     Key([mod], "i", lazy.spawn("idea")),
     Key([mod], "z", lazy.spawn("volumeicon")),
     Key([mod], "d", lazy.spawn("discord")),
