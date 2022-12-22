@@ -154,7 +154,7 @@ layouts = [
         margin=mrg,
         ),
     layout.Max(margin=mrg),
-    #layout.Floating(),
+    layout.Floating(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -188,6 +188,7 @@ if LAPTOP:
                         low_foreground='#d95850',
                         foreground='#aa8deb'
                     ),
+                    widget.WindowCount(padding=5,fmt='{} |'),
                     widget.WindowName(max_chars=40),
                     widget.Prompt(),
                     widget.GroupBox(highlight_method='block',),
