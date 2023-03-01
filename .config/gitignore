@@ -1,0 +1,14 @@
+/*
+!/alacritty
+!/nitrogen
+!/qtile
+!/picom
+!.gitignore
+!.oh-my-zsh
+!install
+!.zshrc
+!.fonts
+!snow.jpg
+!/gtk-3.0
+
+./qtile/__pycache__/config.cpython-310.pyc
