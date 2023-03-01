@@ -17,8 +17,8 @@ def autostart():
     processes = [
         ["/usr/lib/lxpolkit/lxpolkit"],
         ["nm-applet"],
-        # ["picom", "--experimental-backends"],
-        ["picom"],
+        ["picom", "--experimental-backends"],
+        #["picom"],
         ["xfce4-clipman"],
         ["nitrogen", "--restore"],
         ["blueman-applet"],

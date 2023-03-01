@@ -17,4 +17,8 @@ ln -s ~/archqtile/.fonts/ ~
 ln -s ~/archqtile/.icons/ ~
 ln -s ~/archqtile/.themes/ ~
 
+sudo ln -s ~/archqtile/30-touchpad.conf /etc/X11/xorg.conf.d/
+
+nitrogen --set-auto ~/archqtile/snow.jpg
+
 
