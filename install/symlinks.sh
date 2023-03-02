@@ -17,8 +17,13 @@ ln -s ~/archqtile/.fonts/ ~
 ln -s ~/archqtile/.icons/ ~
 ln -s ~/archqtile/.themes/ ~
 
-sudo ln -s ~/archqtile/30-touchpad.conf /etc/X11/xorg.conf.d/
+sudo cp ~/archqtile/30-touchpad.conf /etc/X11/xorg.conf.d/
+sudo cp ~/archqtile/lightdm.conf /etc/lightdm/ 
+sudo cp ~/archqtile/lightdm-webkit2-greeter.conf /etc/lightdm/
+sudo mkdir /usr/share/backgrounds/ 
+sudo cp ~/archqtile/login.jpg /usr/share/backgrounds/
+
+cp ~/archqtile/.local/ ~
 
 nitrogen --set-auto ~/archqtile/snow.jpg
-
 

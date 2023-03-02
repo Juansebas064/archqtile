@@ -623,7 +623,8 @@ else:
                     foreground= bgcolors[0],
                     ),
 
-
+                
+                #System tray
                 widget.WidgetBox(
                     font=symbols_font,
                     fontsize=25,
