@@ -17,8 +17,8 @@ def autostart():
     processes = [
         ["/usr/lib/lxpolkit/lxpolkit"],
         ["nm-applet"],
-        ["picom", "--experimental-backends"],
-        #["picom"],
+        ["picom"], 
+        ["ulauncher", "--hide-window"], 
         ["xfce4-clipman"],
         ["nitrogen", "--restore"],
         ["blueman-applet"],
@@ -53,6 +53,7 @@ keys = [
     Key([], "Print", lazy.spawn("xfce4-screenshooter -f -c")),
     Key(["control"], "Print", lazy.spawn("xfce4-screenshooter -w -c")),
     Key(["shift"], "Print", lazy.spawn("xfce4-screenshooter -r -c")),
+    # Key([mod], "r", lazy.spawn("ulauncher"), desc="Spawn ulauncher"),
 
     # Keybindings for media control
     Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -D default sset Master 2%+ unmute")),
@@ -72,7 +73,7 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+    #Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
@@ -83,11 +84,12 @@ keys = [
 
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
-    Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
-    Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
-    Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    Key([mod], "m", lazy.layout.grow(), desc="Grow window to the left"),
+    Key([mod], "n", lazy.layout.shrink(), desc="Grow window to the right"),
+    #Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
+    #Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
+    Key([mod], "space", lazy.layout.normalize(), desc="Reset all window sizes"),
+    Key([mod, "control"], "space", lazy.layout.set_ratio(0.5), desc="Default ratio"),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -105,7 +107,7 @@ keys = [
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+
 ]
 
 groups = [Group(f"{i+1}", label="") for i in range(6)]
@@ -144,9 +146,6 @@ layouts = [
         single_border_width = 0,
         ),
     layout.Max(margin=mrg),
-    layout.MonadTall(margin=mrg),
-    #layout.Floating(),
-   
 ]
 
 widget_defaults = dict(
@@ -263,14 +262,57 @@ if LAPTOP:
                     padding=0,
                     fontsize = size,
                     font=symbols_font,
-                    ),               
+                    ),     
+
+                # #System tray
+                # widget.WidgetBox(
+                #     start_opened = True,
+                #     font=symbols_font,
+                #     fontsize=25,
+                #     text_closed='  ',
+                #     text_open='  ',
+                #     padding=0,
+                #     widgets=[
+                #         #System tray
+                #         widget.Systray(padding=4),
+                #     ]
+                # ),
+
+                widget.TextBox(
+                    text="-",
+                    padding=3,
+                    foreground= bgcolors[0],
+                    ),
+
+                #System tray
+                widget.Systray(padding=4),
 
 
                 widget.TextBox(
                     text="-",
-                    padding=0,
+                    padding=3,
                     foreground= bgcolors[0],
                     ),
+
+
+                widget.Spacer(),
+
+                
+                #Widget for window name
+                widget.WindowName(
+                    empty_group_string = 'Desktop',
+                    foreground=bgcolors[5],
+                    background=bgcolors[0],
+                    format='{name}',
+                    width=bar.CALCULATED,
+                    max_chars=25,
+                    fontsize=laptop_fontsize,
+                    ),              
+
+
+                widget.Spacer(),
+                #widget.Systray(padding=10),
+
 
                 #Widget for battery level
                  widget.TextBox(
@@ -313,74 +355,41 @@ if LAPTOP:
                     ),
 
 
-                #System tray
-                widget.WidgetBox(
-                    font=symbols_font,
-                    fontsize=25,
-                    text_closed='  ',
-                    text_open='  ',
-                    padding=0,
-                    widgets=[
-                        #System tray
-                        widget.Systray(padding=4),
-                    ]
-                ),
-
-
                 widget.TextBox(
                     text="-",
-                    padding=3,
-                    foreground= bgcolors[0],
+                    padding=0,
+                    foreground=bgcolors[0],
                     ),
-
-
-                widget.Spacer(),
-
-                
-                #Widget for window name
-                widget.WindowName(
-                    empty_group_string = 'Desktop',
-                    foreground=bgcolors[5],
-                    background=bgcolors[0],
-                    format='{name}',
-                    width=bar.CALCULATED,
-                    max_chars=25,
-                    fontsize=laptop_fontsize,
-                    ),              
-
-
-                widget.Spacer(),
-                #widget.Systray(padding=10),
 
 
                #Widget for volume level
                 widget.TextBox(
                     text=left,
                     background=bgcolors[0],
-                    foreground=bgcolors[2],
+                    foreground=bgcolors[3],
                     padding=0,
                     fontsize = size,
                     font=symbols_font,
                     ),
                 widget.Volume(
                     fmt='墳',
-                    background=bgcolors[2],
-                    foreground=bgcolors[5],
+                    background=bgcolors[3],
+                    foreground=bgcolors[0],
                     padding=3,
                     fontsize = 20,
                     font=symbols_font,
                     update_interval=0.1,
                     ),
                 widget.Volume(
-                    background = bgcolors[2],
-                    foreground = bgcolors[5],
+                    background = bgcolors[3],
+                    foreground = bgcolors[0],
                     padding = 3,
                     fontsize=laptop_fontsize,
                     ),
                 widget.TextBox(
                     text=right,
                     background=bgcolors[0],
-                    foreground=bgcolors[2],
+                    foreground=bgcolors[3],
                     padding=0,
                     fontsize = size,
                     font=symbols_font,
@@ -439,16 +448,16 @@ if LAPTOP:
                 widget.TextBox(
                     text=left,
                     background=bgcolors[0],
-                    foreground=bgcolors[3],
+                    foreground=bgcolors[5],
                     padding=0,
                     fontsize = size,
                     font=symbols_font,
                     ),
                 widget.TextBox(
                     text="",
-                    background=bgcolors[3],
+                    background=bgcolors[5],
                     foreground=bgcolors[0],
-                    padding=2,
+                    padding=3,
                     fontsize = 21,
                     font=symbols_font,
                     ),
@@ -456,14 +465,14 @@ if LAPTOP:
                     #widget.Clock(format="  ~   %d / %m / %Y   %H:%M  -  %A   "),
                     format="%H:%M",
                     foreground=bgcolors[0],
-                    background=bgcolors[3],
+                    background=bgcolors[5],
                     padding=3,
                     fontsize=laptop_fontsize,
                     ),
                 widget.TextBox(
                     text=right,
                     background=bgcolors[0],
-                    foreground=bgcolors[3],
+                    foreground=bgcolors[5],
                     padding=0,
                     fontsize = size,
                     font=symbols_font,
@@ -478,45 +487,44 @@ if LAPTOP:
 
 
                 #Arch Icon
-                widget.TextBox(
-                    text=left,
-                    font=symbols_font,
-                    foreground=bgcolors[5],
-                    background=bgcolors[0],
-                    padding=0,
-                    fontsize = size,
-                    ),
-                #Prompt
-                widget.Prompt(
-                        background=bgcolors[5],
-                        foreground=bgcolors[0],
-                        prompt='',
-                        padding=0,
-                        fontsize=15,
-                    ),
-                widget.TextBox(
-                    font=symbols_font,
-                    fontsize = 30,
-                    text='',
-                    background = bgcolors[5],
-                    foreground = bgcolors[0],
-                    padding = 0,
-                    ),
-                widget.TextBox(
-                    text=right,
-                    font=symbols_font,
-                    foreground=bgcolors[5],
-                    background=bgcolors[0],
-                    padding=0,
-                    fontsize = size,
-                    ),
+                # widget.TextBox(
+                #     text=left,
+                #     font=symbols_font,
+                #     foreground=bgcolors[5],
+                #     background=bgcolors[0],
+                #     padding=0,
+                #     fontsize = size,
+                #     ),
+                # #Prompt
+                # widget.Prompt(
+                #         background=bgcolors[5],
+                #         foreground=bgcolors[0],
+                #         prompt='',
+                #         padding=0,
+                #         fontsize=15,
+                #     ),
+                # widget.TextBox(
+                #     font=symbols_font,
+                #     fontsize = 30,
+                #     text='',
+                #     background = bgcolors[5],
+                #     foreground = bgcolors[0],
+                #     padding = 0,
+                #     ),
+                # widget.TextBox(
+                #     text=right,
+                #     font=symbols_font,
+                #     foreground=bgcolors[5],
+                #     background=bgcolors[0],
+                #     padding=0,
+                #     fontsize = size,
+                #     ),
                 ],
                 27,
                 background = bgcolors[0],
                 margin = [0,mrg,mrg,mrg],
                 border_color=bgcolors[0],
                 border_width=9,
-
             ),
         ),
     ]
@@ -822,7 +830,7 @@ else:
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+        #Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
     Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
@@ -832,11 +840,11 @@ dgroups_app_rules = []  # type: list
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
+
 floating_layout = layout.Floating(
-    
     border_focus = "#3f6e84",
     border_normal = "#6b6b6b",
-    border_width=5,
+    border_width=0,
 
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
@@ -847,6 +855,10 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
+        Match(wm_class='system-config-printer'),
+        Match(wm_class='ulauncher'),
+        Match(wm_class='blueman-manager'),
+        Match(wm_class='gcolor3'),
     ]
 )
 auto_fullscreen = True

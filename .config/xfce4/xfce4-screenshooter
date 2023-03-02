@@ -1,8 +1,9 @@
-app=none
+app=gimp-2.10
 custom_action_command=none
 last_user=
 last_extension=png
 screenshot_dir=file:///home/juan/Pictures
 enable_imgur_upload=true
 show_in_folder=false
+action=2
 
