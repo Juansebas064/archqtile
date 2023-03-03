@@ -6,10 +6,12 @@ from libqtile import hook
 import subprocess
 import platform
 
+from bar import laptop_bar, desktop_bar, mrg
+
 hostname = platform.uname().node
 
 LAPTOP = True if subprocess.call("[ -d /proc/acpi/button/lid ] && true || false",shell=True) == 0 else False
-mrg=11
+
 
 
 @hook.subscribe.startup_once
@@ -73,7 +75,11 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    #Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+    Key([mod], "p", lazy.spawn("sh /home/juan/archqtile/scripts/dual-monitor.sh")),
+    Key([mod], "o", lazy.spawn("sh /home/juan/archqtile/scripts/mirror.sh")),
+    Key([mod], "up", lazy.to_screen(1), desc=""),
+    Key([mod], "down", lazy.to_screen(0), desc=""),
+    
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
@@ -143,7 +149,7 @@ layouts = [
         border_normal = "#6b6b6b",
         border_width=5,
         margin=mrg,
-        single_border_width = 0,
+        single_border_width = 5,
         ),
     layout.Max(margin=mrg),
 ]
@@ -170,364 +176,7 @@ bgcolors = {
         }
 
 if LAPTOP:
-    screens = [
-        Screen(
-            bottom=bar.Bar(
-                [
-
-                #Layout icon
-                widget.CurrentLayoutIcon(
-                    scale=0.65,
-                    background=bgcolors[0],
-                    foreground="#ffffff",
-                    padding=5,
-                    ),
-
-                #widget.WindowCount(show_zero=True,),
-
-                widget.TextBox(
-                    text="",
-                    padding=0,
-                    foreground=bgcolors[0],
-                    ),
-
-
-                #Widget for show virtual desktops
-                widget.TextBox(
-                    font=symbols_font,
-                    text=left,
-                    background=bgcolors[0],
-                    foreground=bgcolors[1],
-                    padding=0,
-                    fontsize = size,
-                    ),
-                widget.GroupBox(
-                    highlight_method='line',
-                    fontsize=17,
-                    this_current_screen_border = "#ffffff",
-                    highlight_color = bgcolors[1],
-                    borderwidth = 2,
-                    active = "#ffffff",
-                    background = bgcolors[1],
-                    inactive = bgcolors[2],
-                    padding=1,
-                    ),
-                widget.TextBox(
-                    font = symbols_font,
-                    text =right,
-                    background = bgcolors[0],
-                    foreground = bgcolors[1],
-                    padding =0,
-                    fontsize = size,
-                    ),
-                
-
-                widget.TextBox(
-                    text="-",
-                    padding=0,
-                    foreground= bgcolors[0],
-                    ),
-
-
-                #Widget for RAM usage
-                widget.TextBox(
-                    text=left,
-                    background=bgcolors[0],
-                    foreground=bgcolors[3],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    ),
-                widget.TextBox(
-                    text='',
-                    background=bgcolors[3],
-                    foreground=bgcolors[0],
-                    padding=4,
-                    fontsize = 19,
-                    font=symbols_font,
-                    ),
-                widget.Memory(
-                    fontsize=laptop_fontsize,
-                    measure_mem='G',
-                    format='{MemUsed:.1f}{mm}',
-                    #format=' {MemUsed:.1f}{mm}/{MemTotal:.1f}{mm}',
-                    padding=2,
-                    foreground=bgcolors[0],
-                    background=bgcolors[3],
-                    ),
-                 widget.TextBox(
-                    text=right,
-                    background=bgcolors[0],
-                    foreground=bgcolors[3],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    ),     
-
-                # #System tray
-                # widget.WidgetBox(
-                #     start_opened = True,
-                #     font=symbols_font,
-                #     fontsize=25,
-                #     text_closed='  ',
-                #     text_open='  ',
-                #     padding=0,
-                #     widgets=[
-                #         #System tray
-                #         widget.Systray(padding=4),
-                #     ]
-                # ),
-
-                widget.TextBox(
-                    text="-",
-                    padding=3,
-                    foreground= bgcolors[0],
-                    ),
-
-                #System tray
-                widget.Systray(padding=4),
-
-
-                widget.TextBox(
-                    text="-",
-                    padding=3,
-                    foreground= bgcolors[0],
-                    ),
-
-
-                widget.Spacer(),
-
-                
-                #Widget for window name
-                widget.WindowName(
-                    empty_group_string = 'Desktop',
-                    foreground=bgcolors[5],
-                    background=bgcolors[0],
-                    format='{name}',
-                    width=bar.CALCULATED,
-                    max_chars=25,
-                    fontsize=laptop_fontsize,
-                    ),              
-
-
-                widget.Spacer(),
-                #widget.Systray(padding=10),
-
-
-                #Widget for battery level
-                 widget.TextBox(
-                    text=left,
-                    background=bgcolors[0],
-                    foreground='#aa8deb',
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    ),
-                widget.Battery(
-                    font=symbols_font,
-                    fontsize=13,
-                    full_char='',
-                    discharge_char='',
-                    charge_char='',
-                    format='{char}',
-                    low_foreground=bgcolors[0],
-                    foreground=bgcolors[0],
-                    background='#aa8deb',
-                    update_interval=5,
-                    padding=5,
-                ),
-                widget.Battery(
-                    format='{percent:2.0%}',
-                    fontsize=laptop_fontsize,
-                    low_foreground=bgcolors[0],
-                    foreground=bgcolors[0],
-                    background='#aa8deb',
-                    update_interval=5,
-                    padding=1,
-                ),
-                 widget.TextBox(
-                    text=right,
-                    background=bgcolors[0],
-                    foreground='#aa8deb',
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    ),
-
-
-                widget.TextBox(
-                    text="-",
-                    padding=0,
-                    foreground=bgcolors[0],
-                    ),
-
-
-               #Widget for volume level
-                widget.TextBox(
-                    text=left,
-                    background=bgcolors[0],
-                    foreground=bgcolors[3],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    ),
-                widget.Volume(
-                    fmt='墳',
-                    background=bgcolors[3],
-                    foreground=bgcolors[0],
-                    padding=3,
-                    fontsize = 20,
-                    font=symbols_font,
-                    update_interval=0.1,
-                    ),
-                widget.Volume(
-                    background = bgcolors[3],
-                    foreground = bgcolors[0],
-                    padding = 3,
-                    fontsize=laptop_fontsize,
-                    ),
-                widget.TextBox(
-                    text=right,
-                    background=bgcolors[0],
-                    foreground=bgcolors[3],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    ), 
-
-
-                widget.TextBox(
-                    text="-",
-                    padding=0,
-                    foreground=bgcolors[0],
-                    ),
-
-
-                #Widget for date
-                widget.TextBox(
-                    text=left,
-                    background=bgcolors[0],
-                    foreground=bgcolors[1],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                ),
-                widget.TextBox(
-                    text='',
-                    font=symbols_font,
-                    fontsize=19,
-                    padding=4,
-                    foreground=bgcolors[5],
-                    background=bgcolors[1],
-                ),
-                widget.Clock(
-                    format="%d/%m/%Y",
-                    foreground=bgcolors[5],
-                    background=bgcolors[1],
-                    padding=3,
-                    fontsize=laptop_fontsize,
-                ),
-                widget.TextBox(
-                    text=right,
-                    background=bgcolors[0],
-                    foreground=bgcolors[1],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                ),
-
-                
-                widget.TextBox(
-                    text="-",
-                    padding=0,
-                    foreground=bgcolors[0],
-                ), 
-
-
-               #Widget for clock
-                widget.TextBox(
-                    text=left,
-                    background=bgcolors[0],
-                    foreground=bgcolors[5],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    ),
-                widget.TextBox(
-                    text="",
-                    background=bgcolors[5],
-                    foreground=bgcolors[0],
-                    padding=3,
-                    fontsize = 21,
-                    font=symbols_font,
-                    ),
-                widget.Clock(
-                    #widget.Clock(format="  ~   %d / %m / %Y   %H:%M  -  %A   "),
-                    format="%H:%M",
-                    foreground=bgcolors[0],
-                    background=bgcolors[5],
-                    padding=3,
-                    fontsize=laptop_fontsize,
-                    ),
-                widget.TextBox(
-                    text=right,
-                    background=bgcolors[0],
-                    foreground=bgcolors[5],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    ),               
-
-
-                widget.TextBox(
-                    text="-",
-                    padding=0,
-                    foreground=bgcolors[0],
-                    ),                
-
-
-                #Arch Icon
-                # widget.TextBox(
-                #     text=left,
-                #     font=symbols_font,
-                #     foreground=bgcolors[5],
-                #     background=bgcolors[0],
-                #     padding=0,
-                #     fontsize = size,
-                #     ),
-                # #Prompt
-                # widget.Prompt(
-                #         background=bgcolors[5],
-                #         foreground=bgcolors[0],
-                #         prompt='',
-                #         padding=0,
-                #         fontsize=15,
-                #     ),
-                # widget.TextBox(
-                #     font=symbols_font,
-                #     fontsize = 30,
-                #     text='',
-                #     background = bgcolors[5],
-                #     foreground = bgcolors[0],
-                #     padding = 0,
-                #     ),
-                # widget.TextBox(
-                #     text=right,
-                #     font=symbols_font,
-                #     foreground=bgcolors[5],
-                #     background=bgcolors[0],
-                #     padding=0,
-                #     fontsize = size,
-                #     ),
-                ],
-                27,
-                background = bgcolors[0],
-                margin = [0,mrg,mrg,mrg],
-                border_color=bgcolors[0],
-                border_width=9,
-            ),
-        ),
-    ]
+    screens = laptop_bar()
 else:
     screens = [
         Screen(
@@ -687,6 +336,9 @@ else:
                     background = bgcolors[2],
                     foreground = bgcolors[5],
                     padding = 5,
+                    mouse_callbacks = {
+                        "Button2": lazy.spawn("pavucontrol")
+                    },
                     ),
                 widget.TextBox(
                     text=right,
@@ -727,6 +379,9 @@ else:
                     foreground=bgcolors[5],
                     background=bgcolors[1],
                     padding=4,
+                    mouse_callbacks = {
+                        "Button1": lazy.spawn("gsimplecal")
+                    },
                 ),
                 widget.TextBox(
                     text=right,
@@ -859,6 +514,7 @@ floating_layout = layout.Floating(
         Match(wm_class='ulauncher'),
         Match(wm_class='blueman-manager'),
         Match(wm_class='gcolor3'),
+        Match(wm_class='pavucontrol'),
     ]
 )
 auto_fullscreen = True
