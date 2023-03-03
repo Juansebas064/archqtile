@@ -275,25 +275,15 @@ else:
 
 
                 widget.TextBox(
-                    text="-",
+                    text="",
                     padding=3,
                     foreground= bgcolors[0],
                     ),
 
-                
-                #System tray
-                widget.WidgetBox(
-                    font=symbols_font,
-                    fontsize=25,
-                    text_closed='󰁙 ',
-                    text_open='󰁒 ',
-                    padding=5,
-                    widgets=[
-                        #System tray
-                        widget.Systray(padding=10),
-                    ]
-                ),
 
+                    #System tray
+                    widget.Systray(padding=10),               
+ 
 
                 widget.Spacer(),
 
@@ -446,29 +436,23 @@ else:
                 widget.TextBox(
                     text=left,
                     font=symbols_font,
-                    foreground=bgcolors[4],
+                    foreground=bgcolors[5],
                     background=bgcolors[0],
                     padding=0,
                     fontsize = size,
-                    ),
-                #Prompt
-                widget.Prompt(
-                        background=bgcolors[4],
-                        foreground=bgcolors[0],
-                        prompt='Run: ',
                     ),
                 widget.TextBox(
                     font=symbols_font,
                     fontsize = 30,
                     text='',
-                    background = bgcolors[4],
+                    background = bgcolors[5],
                     foreground = bgcolors[0],
                     padding = 0,
                     ),
                 widget.TextBox(
                     text=right,
                     font=symbols_font,
-                    foreground=bgcolors[4],
+                    foreground=bgcolors[5],
                     background=bgcolors[0],
                     padding=0,
                     fontsize = size,
