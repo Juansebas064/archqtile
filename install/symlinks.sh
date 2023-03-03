@@ -1,6 +1,6 @@
 cd ~
 rm -r ~/.fonts ~/.icons ~/.themes 
-rm -r ~/.config/{alacritty,gtk-2.0,gtk-3.0,nitrogen,nvim,picom,qtile,Thunar,xfce4}
+rm -r ~/.config/{alacritty,gtk-2.0,gtk-3.0,nitrogen,nvim,picom,qtile,Thunar,xfce4,ulauncher}
 
 
 ln -s ~/archqtile/.config/alacritty/ ~/.config/
