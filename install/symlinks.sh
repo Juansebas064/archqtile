@@ -25,7 +25,7 @@ sudo cp ~/archqtile/lightdm-webkit2-greeter.conf /etc/lightdm/
 sudo mkdir /usr/share/backgrounds/ 
 sudo cp ~/archqtile/login.jpg /usr/share/backgrounds/
 
-cp ~/archqtile/.local/ ~
+cp -r ~/archqtile/.local/ ~
 
 nitrogen --set-auto ~/archqtile/snow.jpg
 
