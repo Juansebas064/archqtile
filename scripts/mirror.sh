@@ -3,7 +3,7 @@ res=$(xrandr | awk '/HDMI1/{getline; print}' | awk '{print $1}')
 
 if [ $source = 'HDMI1' ]
 then   
-    xrandr --output eDP1 --mode 1368x768 --scale-from $res --output HDMI1 --auto --same-as eDP1
+    xrandr --output eDP1 --mode 1368x768 --output HDMI1 --auto --same-as eDP1 --scale-from 1368x768
     qtile cmd-obj -o cmd -f restart
     cp ~/archqtile/scripts/bg-saved.cfg ~/archqtile/.config/nitrogen/
     qtile cmd-obj -o cmd -f restart
