@@ -2,14 +2,14 @@
     "com.github.lighttigerxiv.ulauncher-terminal-runner-extension": {
         "id": "com.github.lighttigerxiv.ulauncher-terminal-runner-extension",
         "url": "https://github.com/lighttigerXIV/ulauncher-terminal-runner-extension/",
-        "updated_at": "2023-03-03T13:30:37.806119",
-        "last_commit": "8cbcf85e8b3a48a45d2d181488af6e5d89bff1b0",
-        "last_commit_time": "2022-05-22T12:33:25"
+        "updated_at": "2023-04-18T23:17:27.843475",
+        "last_commit": "3307b06621c25b882a0889c16189848f6f27d0ab",
+        "last_commit_time": "2023-03-26T12:26:35"
     },
     "com.github.iboyperson.ulauncher-system": {
         "id": "com.github.iboyperson.ulauncher-system",
         "url": "https://github.com/iboyperson/ulauncher-system",
-        "updated_at": "2023-03-03T13:30:40.119963",
+        "updated_at": "2023-04-18T23:17:30.150956",
         "last_commit": "667613bf7bb6b4affa4f2121b58589477cd89829",
         "last_commit_time": "2021-11-08T18:16:55"
     }

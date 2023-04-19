@@ -163,7 +163,7 @@ extension_defaults = widget_defaults.copy()
 left = ""
 right = ""
 symbols_font = 'MesloLGS NF'
-size=22
+size=18
 laptop_fontsize = 16
 
 bgcolors = {
@@ -171,7 +171,7 @@ bgcolors = {
         1:'#34444c',
         2:'#457c8a',
         3:'#84b5cc',
-        4:'#cfd8dc',
+        4:'#894bb3',
         5:'#ffffff'
         }
 
@@ -249,7 +249,7 @@ else:
                     font=symbols_font,
                     ),
                 widget.TextBox(
-                    text='󰍛',
+                    text='',
                     background=bgcolors[3],
                     foreground=bgcolors[0],
                     padding=6,
@@ -307,25 +307,31 @@ else:
                 widget.TextBox(
                     text=left,
                     background=bgcolors[0],
-                    foreground=bgcolors[2],
+                    foreground=bgcolors[4],
                     padding=0,
                     fontsize = size,
                     font=symbols_font,
+                    mouse_callbacks = {
+                        "Button2": lazy.spawn("pavucontrol")
+                    },
                     ),
                 widget.Volume(
-                    fmt='󰕾',
-                    background=bgcolors[2],
+                    theme_path = '~/.icons/Colloid-teal-dark/status/24/',
+                    background=bgcolors[4],
                     foreground=bgcolors[5],
-                    padding=5,
+                    padding=1,
                     fontsize = 19,
                     font=symbols_font,
                     update_interval=0.1,
+                    mouse_callbacks = {
+                        "Button2": lazy.spawn("pavucontrol")
+                    },
                     ),
                 widget.Volume(
                     font=symbols_font,
-                    background = bgcolors[2],
+                    background = bgcolors[4],
                     foreground = bgcolors[5],
-                    padding = 5,
+                    padding = 0,
                     mouse_callbacks = {
                         "Button2": lazy.spawn("pavucontrol")
                     },
@@ -333,10 +339,13 @@ else:
                 widget.TextBox(
                     text=right,
                     background=bgcolors[0],
-                    foreground=bgcolors[2],
+                    foreground=bgcolors[4],
                     padding=0,
                     fontsize = size,
                     font=symbols_font,
+                    mouse_callbacks = {
+                        "Button2": lazy.spawn("pavucontrol")
+                    },
                     ), 
 
 
@@ -355,14 +364,20 @@ else:
                     padding=0,
                     fontsize = size,
                     font=symbols_font,
+                    mouse_callbacks = {
+                        "Button1": lazy.spawn("gsimplecal")
+                    },
                 ),
                 widget.TextBox(
-                    text='󰃵',
+                    text='',
                     font=symbols_font,
                     fontsize=19,
                     padding=7,
                     foreground=bgcolors[5],
                     background=bgcolors[1],
+                    mouse_callbacks = {
+                        "Button1": lazy.spawn("gsimplecal")
+                    },
                 ),
                 widget.Clock(
                     format="%d/%m/%Y",
@@ -380,6 +395,9 @@ else:
                     padding=0,
                     fontsize = size,
                     font=symbols_font,
+                    mouse_callbacks = {
+                        "Button1": lazy.spawn("gsimplecal")
+                    },
                 ),
 
                 
@@ -400,7 +418,7 @@ else:
                     font=symbols_font,
                     ),
                 widget.TextBox(
-                    text="󰥔",
+                    text="",
                     background=bgcolors[3],
                     foreground=bgcolors[0],
                     padding=7,
@@ -458,11 +476,11 @@ else:
                     fontsize = size,
                     ),
                 ],
-                27,
+                22,
                 background = bgcolors[0],
-                margin = [0,mrg,mrg,mrg],
+                margin = 0,
                 border_color=bgcolors[0],
-                border_width=9,
+                border_width=6,
             ),
         ),
     ]

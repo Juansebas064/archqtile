@@ -3,7 +3,7 @@ from libqtile.config import Screen
 from libqtile.lazy import lazy
 
 
-mrg=11
+mrg=5
 
 left = ""
 right = ""
@@ -16,7 +16,7 @@ bgcolors = {
         1:'#34444c',
         2:'#457c8a',
         3:'#84b5cc',
-        4:'#833bb3',
+        4:'#894bb3',
         5:'#ffffff'
         }
 
@@ -205,44 +205,46 @@ def laptop_bar():
                 widget.TextBox(
                     text=left,
                     background=bgcolors[0],
-                    foreground=bgcolors[3],
+                    foreground=bgcolors[2],
                     padding=0,
                     fontsize = size,
                     font=symbols_font,
+                    mouse_callbacks = {
+                        "Button2": lazy.spawn("pavucontrol")
+                    },
                     ),
                 widget.Volume(
-                    fmt='墳',
-                    background=bgcolors[3],
-                    foreground=bgcolors[0],
-                    padding=3,
-                    fontsize = 20,
+                    theme_path = '~/.icons/Colloid-teal-dark/status/24/',
+                    background=bgcolors[2],
+                    foreground=bgcolors[5],
+                    padding=1,
+                    fontsize = 19,
                     font=symbols_font,
                     update_interval=0.1,
+                    mouse_callbacks = {
+                        "Button2": lazy.spawn("pavucontrol")
+                    },
                     ),
                 widget.Volume(
-                    background = bgcolors[3],
-                    foreground = bgcolors[0],
-                    padding = 3,
-                    fontsize=laptop_fontsize,
+                    font=symbols_font,
+                    background = bgcolors[2],
+                    foreground = bgcolors[5],
+                    padding = 0,
                     mouse_callbacks = {
-                        "Button3": lazy.spawn("pavucontrol")
+                        "Button2": lazy.spawn("pavucontrol")
                     },
                     ),
                 widget.TextBox(
                     text=right,
                     background=bgcolors[0],
-                    foreground=bgcolors[3],
+                    foreground=bgcolors[2],
                     padding=0,
                     fontsize = size,
                     font=symbols_font,
+                    mouse_callbacks = {
+                        "Button2": lazy.spawn("pavucontrol")
+                    },
                     ), 
-
-
-                widget.TextBox(
-                    text="-",
-                    padding=0,
-                    foreground=bgcolors[0],
-                    ),
 
 
                 #Widget for date
@@ -324,11 +326,11 @@ def laptop_bar():
                     font=symbols_font,
                     ),               
                 ],
-                27,
+                22,
                 background = bgcolors[0],
-                margin = [0,mrg,mrg,mrg],
+                margin = 0,
                 border_color=bgcolors[0],
-                border_width=9,
+                border_width=6,
             ),
         ),
         Screen(
@@ -625,11 +627,11 @@ def laptop_bar():
                     font=symbols_font,
                     ),               
                 ],
-                27,
+                22,
                 background = bgcolors[0],
-                margin = [0,mrg,mrg,mrg],
+                margin = 0,
                 border_color=bgcolors[0],
-                border_width=9,
+                border_width=6,
             ),
         ),
     ]
