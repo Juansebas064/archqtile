@@ -3,7 +3,7 @@ from libqtile.config import Screen
 from libqtile.lazy import lazy
 
 
-mrg=5
+mrg=8
 
 left = ""
 right = ""

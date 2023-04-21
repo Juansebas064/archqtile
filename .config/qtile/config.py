@@ -145,11 +145,11 @@ for i in groups:
 layouts = [
     layout.MonadTall(
         # border_focus_stack=["#397086", "#8f3d3d"], 
-        border_focus = "#3f6e84",
-        border_normal = "#6b6b6b",
-        border_width=5,
+        border_focus = "#3face4",
+        border_normal = "#111314",
+        border_width=3,
         margin=mrg,
-        single_border_width = 5,
+        single_border_width = 0,
         ),
     layout.Max(margin=mrg),
 ]
@@ -167,6 +167,7 @@ size=18
 laptop_fontsize = 16
 
 bgcolors = {
+        'background':'#00000000',
         0:'#1a1d1f',
         1:'#34444c',
         2:'#457c8a',
@@ -185,8 +186,8 @@ else:
 
                 #Layout icon
                 widget.CurrentLayoutIcon(
-                    scale=0.65,
-                    background=bgcolors[0],
+                    scale=0.8,
+                    background=bgcolors['background'],
                     foreground="#ffffff",
                     padding=7,
                     ),
@@ -198,7 +199,7 @@ else:
                 widget.TextBox(
                     text=".",
                     padding=0,
-                    foreground=bgcolors[0],
+                    foreground=bgcolors['background'],
                     ),
 
 
@@ -206,7 +207,7 @@ else:
                 widget.TextBox(
                     font=symbols_font,
                     text=left,
-                    background=bgcolors[0],
+                    background=bgcolors['background'],
                     foreground=bgcolors[1],
                     padding=0,
                     fontsize = size,
@@ -225,7 +226,7 @@ else:
                 widget.TextBox(
                     font = symbols_font,
                     text =right,
-                    background = bgcolors[0],
+                    background = bgcolors['background'],
                     foreground = bgcolors[1],
                     padding =0,
                     fontsize = size,
@@ -235,14 +236,14 @@ else:
                 widget.TextBox(
                     text="-",
                     padding=3,
-                    foreground= bgcolors[0],
+                    foreground= bgcolors['background'],
                     ),
 
 
                 #Widget for RAM usage
                 widget.TextBox(
                     text=left,
-                    background=bgcolors[0],
+                    background=bgcolors['background'],
                     foreground=bgcolors[3],
                     padding=0,
                     fontsize = size,
@@ -266,7 +267,7 @@ else:
                     ),
                  widget.TextBox(
                     text=right,
-                    background=bgcolors[0],
+                    background=bgcolors['background'],
                     foreground=bgcolors[3],
                     padding=0,
                     fontsize = size,
@@ -277,7 +278,7 @@ else:
                 widget.TextBox(
                     text="",
                     padding=3,
-                    foreground= bgcolors[0],
+                    foreground= bgcolors['background'],
                     ),
 
 
@@ -292,7 +293,7 @@ else:
                 widget.WindowName(
                     empty_group_string = 'Desktop',
                     foreground=bgcolors[5],
-                    background=bgcolors[0],
+                    background=bgcolors['background'],
                     format='{name}',
                     width=bar.CALCULATED,
                     max_chars=45,
@@ -306,7 +307,7 @@ else:
                #Widget for volume level
                 widget.TextBox(
                     text=left,
-                    background=bgcolors[0],
+                    background=bgcolors['background'],
                     foreground=bgcolors[4],
                     padding=0,
                     fontsize = size,
@@ -338,7 +339,7 @@ else:
                     ),
                 widget.TextBox(
                     text=right,
-                    background=bgcolors[0],
+                    background=bgcolors['background'],
                     foreground=bgcolors[4],
                     padding=0,
                     fontsize = size,
@@ -352,14 +353,14 @@ else:
                 widget.TextBox(
                     text="-",
                     padding=3,
-                    foreground=bgcolors[0],
+                    foreground=bgcolors['background'],
                     ),
 
 
                 #Widget for date
                 widget.TextBox(
                     text=left,
-                    background=bgcolors[0],
+                    background=bgcolors['background'],
                     foreground=bgcolors[1],
                     padding=0,
                     fontsize = size,
@@ -390,7 +391,7 @@ else:
                 ),
                 widget.TextBox(
                     text=right,
-                    background=bgcolors[0],
+                    background=bgcolors['background'],
                     foreground=bgcolors[1],
                     padding=0,
                     fontsize = size,
@@ -404,14 +405,14 @@ else:
                 widget.TextBox(
                     text="-",
                     padding=3,
-                    foreground=bgcolors[0],
+                    foreground=bgcolors['background'],
                 ), 
 
 
                #Widget for clock
                 widget.TextBox(
                     text=left,
-                    background=bgcolors[0],
+                    background=bgcolors['background'],
                     foreground=bgcolors[3],
                     padding=0,
                     fontsize = size,
@@ -434,7 +435,7 @@ else:
                     ),
                 widget.TextBox(
                     text=right,
-                    background=bgcolors[0],
+                    background=bgcolors['background'],
                     foreground=bgcolors[3],
                     padding=0,
                     fontsize = size,
@@ -445,7 +446,7 @@ else:
                 widget.TextBox(
                     text="-",
                     padding=3,
-                    foreground=bgcolors[0],
+                    foreground=bgcolors['background'],
                     ),                
 
 
@@ -455,7 +456,7 @@ else:
                     text=left,
                     font=symbols_font,
                     foreground=bgcolors[5],
-                    background=bgcolors[0],
+                    background=bgcolors['background'],
                     padding=0,
                     fontsize = size,
                     ),
@@ -471,16 +472,16 @@ else:
                     text=right,
                     font=symbols_font,
                     foreground=bgcolors[5],
-                    background=bgcolors[0],
+                    background=bgcolors['background'],
                     padding=0,
                     fontsize = size,
                     ),
                 ],
                 22,
-                background = bgcolors[0],
-                margin = 0,
-                border_color=bgcolors[0],
-                border_width=6,
+                background = bgcolors['background'],
+                margin = [3,0,0,0],
+                border_color=bgcolors['background'],
+                border_width=7,
             ),
         ),
     ]
