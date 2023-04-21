@@ -21,6 +21,7 @@ def autostart():
         ["nm-applet"],
         ["picom"], 
         ["ulauncher", "--hide-window"], 
+        ["libinput-gestures-setup", "start"], 
         ["xfce4-clipman"],
         ["nitrogen", "--restore"],
         ["blueman-applet"],
