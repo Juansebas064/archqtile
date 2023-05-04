@@ -18,8 +18,10 @@ astronvim.vim_opts(astronvim.user_plugin_opts("options", {
     preserveindent = true, -- Preserve indent structure as much as possible
     pumheight = 10, -- Height of the pop up menu
     relativenumber = true, -- Show relative numberline
-    scrolloff = 8, -- Number of lines to keep above and below the cursor
-    shiftwidth = 2, -- Number of space inserted for indentation
+    scrolloff = 10, -- Number of lines to keep above and below the cursor
+    shiftwidth = 4, -- Number of space inserted for indentation
+    softtabstop = 4,
+    shiftround = true,
     showmode = true, -- Disable showing modes in command line
     showtabline = 2, -- always display tabline
     sidescrolloff = 8, -- Number of columns to keep at the sides of the cursor
@@ -27,7 +29,7 @@ astronvim.vim_opts(astronvim.user_plugin_opts("options", {
     smartcase = true, -- Case sensitivie searching
     splitbelow = true, -- Splitting a new window below the current one
     splitright = true, -- Splitting a new window at the right of the current one
-    tabstop = 2, -- Number of space in a tab
+    tabstop = 4, -- Number of space in a tab
     termguicolors = true, -- Enable 24-bit RGB color in the TUI
     timeoutlen = 300, -- Length of time to wait for a mapped sequence
     undofile = true, -- Enable persistent undo

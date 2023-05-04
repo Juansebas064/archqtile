@@ -6,12 +6,14 @@ from libqtile import hook
 import subprocess
 import platform
 
-from bar import laptop_bar, desktop_bar, mrg
+from bar import laptopBar, desktopBar
 
 hostname = platform.uname().node
+MARGIN = 8
 
-LAPTOP = True if subprocess.call("[ -d /proc/acpi/button/lid ] && true || false",shell=True) == 0 else False
 
+LAPTOP = True if subprocess.call(
+    "[ -d /proc/acpi/button/lid ] && true || false", shell=True) == 0 else False
 
 
 @hook.subscribe.startup_once
@@ -19,13 +21,14 @@ def autostart():
     processes = [
         ["/usr/lib/lxpolkit/lxpolkit"],
         ["nm-applet"],
-        ["picom"], 
-        ["ulauncher", "--hide-window"], 
-        ["libinput-gestures-setup", "start"], 
+        ["picom"],
+        ["ulauncher", "--hide-window"],
+        ["libinput-gestures-setup", "start"],
         ["xfce4-clipman"],
         ["nitrogen", "--restore"],
         ["blueman-applet"],
-        ["setxkbmap", "-rules", "evdev", "-model", "evdev", "-layout", "us", "-variant", "altgr-intl"],
+        ["setxkbmap", "-rules", "evdev", "-model", "evdev",
+            "-layout", "us", "-variant", "altgr-intl"],
     ]
 
     for p in processes:
@@ -33,7 +36,7 @@ def autostart():
 
 
 mod = "mod4"
-terminal = guess_terminal() 
+terminal = guess_terminal()
 
 
 keys = [
@@ -44,13 +47,14 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "w", lazy.spawn("firefox")),
     Key([mod], "t", lazy.spawn("telegram-desktop")),
-    Key([mod], "e", lazy.spawn("thunar")),    
+    Key([mod], "e", lazy.spawn("thunar")),
     Key([mod], "y", lazy.spawn("whatsapp-nativefier")),
     Key([mod], "v", lazy.spawn("code")),
     Key([mod], "c", lazy.spawn("xfce4-popup-clipman")),
     Key([mod], "g", lazy.spawn("gparted")),
     Key([mod], "i", lazy.spawn("idea")),
-    Key([mod], "o", lazy.spawn("/home/juan/.joplin/Joplin.AppImage %u")),
+    Key([mod], "u", lazy.spawn("joplin")),
+    # Key([mod], "u", lazy.spawn("/home/juan/.joplin/Joplin.AppImage %u")),
     Key([mod], "d", lazy.spawn("discord")),
     Key([mod], "u", lazy.spawn("sh /home/juan/MinecraftServerSync.sh")),
     Key([], "Print", lazy.spawn("xfce4-screenshooter -f -c")),
@@ -59,8 +63,10 @@ keys = [
     # Key([mod], "r", lazy.spawn("ulauncher"), desc="Spawn ulauncher"),
 
     # Keybindings for media control
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("amixer -D default sset Master 2%+ unmute")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("amixer -D default sset Master 2%- unmute")),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn(
+        "amixer -D default sset Master 2%+ unmute")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn(
+        "amixer -D default sset Master 2%- unmute")),
     Key([], "XF86AudioMute", lazy.spawn("amixer -D default sset Master toggle")),
     Key([], "XF86AudioNext", lazy.spawn("playerctl next")),
     Key([], "XF86AudioPrev", lazy.spawn("playerctl previous")),
@@ -80,12 +86,14 @@ keys = [
     Key([mod], "o", lazy.spawn("sh /home/juan/archqtile/scripts/mirror.sh")),
     Key([mod], "up", lazy.to_screen(1), desc=""),
     Key([mod], "down", lazy.to_screen(0), desc=""),
-    
+
 
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
+    Key([mod, "shift"], "h", lazy.layout.shuffle_left(),
+        desc="Move window to the left"),
+    Key([mod, "shift"], "l", lazy.layout.shuffle_right(),
+        desc="Move window to the right"),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
 
@@ -93,10 +101,11 @@ keys = [
     # will be to screen edge - window would shrink.
     Key([mod], "m", lazy.layout.grow(), desc="Grow window to the left"),
     Key([mod], "n", lazy.layout.shrink(), desc="Grow window to the right"),
-    #Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
-    #Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
+    # Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
+    # Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "space", lazy.layout.normalize(), desc="Reset all window sizes"),
-    Key([mod, "control"], "space", lazy.layout.set_ratio(0.5), desc="Default ratio"),
+    Key([mod, "control"], "space", lazy.layout.set_ratio(
+        0.5), desc="Default ratio"),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -134,7 +143,8 @@ for i in groups:
                 [mod, "shift"],
                 i.name,
                 lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
+                desc="Switch to & move focused window to group {}".format(
+                    i.name),
             ),
             # Or, use below if you prefer not to switch to that group.
             # # mod1 + shift + letter of group = move focused window to group
@@ -145,352 +155,48 @@ for i in groups:
 
 layouts = [
     layout.MonadTall(
-        # border_focus_stack=["#397086", "#8f3d3d"], 
-        border_focus = "#3face4",
-        border_normal = "#111314",
+        # border_focus_stack=["#397086", "#8f3d3d"],
+        border_focus="#3face4",
+        border_normal="#111314",
         border_width=3,
-        margin=mrg,
-        single_border_width = 0,
-        ),
-    layout.Max(margin=mrg),
+        margin=MARGIN,
+        single_border_width=0,
+    ),
+    layout.Max(margin=MARGIN),
 ]
 
 widget_defaults = dict(
     font="Bitstream Vera Sans Mono Bold",
-    fontsize=15,
 )
 extension_defaults = widget_defaults.copy()
 
 left = ""
 right = ""
 symbols_font = 'MesloLGS NF'
-size=18
+size = 18
 laptop_fontsize = 16
 
 bgcolors = {
-        'background':'#00000000',
-        0:'#1a1d1f',
-        1:'#34444c',
-        2:'#457c8a',
-        3:'#84b5cc',
-        4:'#894bb3',
-        5:'#ffffff'
-        }
+    'background': '#00000000',
+    0: '#1a1d1f',
+    1: '#34444c',
+    2: '#457c8a',
+    3: '#84b5cc',
+    4: '#894bb3',
+    5: '#ffffff'
+}
 
 if LAPTOP:
-    screens = laptop_bar()
+    screens = laptopBar()
 else:
-    screens = [
-        Screen(
-            bottom=bar.Bar(
-                [
+    screens = desktopBar()
 
-                #Layout icon
-                widget.CurrentLayoutIcon(
-                    scale=0.8,
-                    background=bgcolors['background'],
-                    foreground="#ffffff",
-                    padding=7,
-                    ),
-
-
-                widget.WindowCount(show_zero=True,),
-
-
-                widget.TextBox(
-                    text=".",
-                    padding=0,
-                    foreground=bgcolors['background'],
-                    ),
-
-
-                #Widget for show virtual desktops
-                widget.TextBox(
-                    font=symbols_font,
-                    text=left,
-                    background=bgcolors['background'],
-                    foreground=bgcolors[1],
-                    padding=0,
-                    fontsize = size,
-                    ),
-                widget.GroupBox(
-                    highlight_method='line',
-                    fontsize=18,
-                    this_current_screen_border = "#ffffff",
-                    highlight_color = bgcolors[1],
-                    borderwidth = 2,
-                    active = "#ffffff",
-                    background = bgcolors[1],
-                    inactive = bgcolors[2],
-                    padding=1,
-                    ),
-                widget.TextBox(
-                    font = symbols_font,
-                    text =right,
-                    background = bgcolors['background'],
-                    foreground = bgcolors[1],
-                    padding =0,
-                    fontsize = size,
-                    ),
-                
-
-                widget.TextBox(
-                    text="-",
-                    padding=3,
-                    foreground= bgcolors['background'],
-                    ),
-
-
-                #Widget for RAM usage
-                widget.TextBox(
-                    text=left,
-                    background=bgcolors['background'],
-                    foreground=bgcolors[3],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    ),
-                widget.TextBox(
-                    text='',
-                    background=bgcolors[3],
-                    foreground=bgcolors[0],
-                    padding=6,
-                    fontsize = 19,
-                    font=symbols_font,
-                    ),
-                widget.Memory(
-                    measure_mem='G',
-                    format='{MemUsed:.1f}{mm}',
-                    #format=' {MemUsed:.1f}{mm}/{MemTotal:.1f}{mm}',
-                    padding=4,
-                    foreground=bgcolors[0],
-                    background=bgcolors[3],
-                    ),
-                 widget.TextBox(
-                    text=right,
-                    background=bgcolors['background'],
-                    foreground=bgcolors[3],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    ),               
-
-
-                widget.TextBox(
-                    text="",
-                    padding=3,
-                    foreground= bgcolors['background'],
-                    ),
-
-
-                    #System tray
-                    widget.Systray(padding=10),               
- 
-
-                widget.Spacer(),
-
-                
-                #Widget for window name
-                widget.WindowName(
-                    empty_group_string = 'Desktop',
-                    foreground=bgcolors[5],
-                    background=bgcolors['background'],
-                    format='{name}',
-                    width=bar.CALCULATED,
-                    max_chars=45,
-                    ),      
-
-
-                widget.Spacer(),
-                #widget.Systray(padding=10),
-
-
-               #Widget for volume level
-                widget.TextBox(
-                    text=left,
-                    background=bgcolors['background'],
-                    foreground=bgcolors[4],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    mouse_callbacks = {
-                        "Button2": lazy.spawn("pavucontrol")
-                    },
-                    ),
-                widget.Volume(
-                    theme_path = '~/.icons/Colloid-teal-dark/status/24/',
-                    background=bgcolors[4],
-                    foreground=bgcolors[5],
-                    padding=1,
-                    fontsize = 19,
-                    font=symbols_font,
-                    update_interval=0.1,
-                    mouse_callbacks = {
-                        "Button2": lazy.spawn("pavucontrol")
-                    },
-                    ),
-                widget.Volume(
-                    font=symbols_font,
-                    background = bgcolors[4],
-                    foreground = bgcolors[5],
-                    padding = 0,
-                    mouse_callbacks = {
-                        "Button2": lazy.spawn("pavucontrol")
-                    },
-                    ),
-                widget.TextBox(
-                    text=right,
-                    background=bgcolors['background'],
-                    foreground=bgcolors[4],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    mouse_callbacks = {
-                        "Button2": lazy.spawn("pavucontrol")
-                    },
-                    ), 
-
-
-                widget.TextBox(
-                    text="-",
-                    padding=3,
-                    foreground=bgcolors['background'],
-                    ),
-
-
-                #Widget for date
-                widget.TextBox(
-                    text=left,
-                    background=bgcolors['background'],
-                    foreground=bgcolors[1],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    mouse_callbacks = {
-                        "Button1": lazy.spawn("gsimplecal")
-                    },
-                ),
-                widget.TextBox(
-                    text='',
-                    font=symbols_font,
-                    fontsize=19,
-                    padding=7,
-                    foreground=bgcolors[5],
-                    background=bgcolors[1],
-                    mouse_callbacks = {
-                        "Button1": lazy.spawn("gsimplecal")
-                    },
-                ),
-                widget.Clock(
-                    format="%d/%m/%Y",
-                    foreground=bgcolors[5],
-                    background=bgcolors[1],
-                    padding=4,
-                    mouse_callbacks = {
-                        "Button1": lazy.spawn("gsimplecal")
-                    },
-                ),
-                widget.TextBox(
-                    text=right,
-                    background=bgcolors['background'],
-                    foreground=bgcolors[1],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    mouse_callbacks = {
-                        "Button1": lazy.spawn("gsimplecal")
-                    },
-                ),
-
-                
-                widget.TextBox(
-                    text="-",
-                    padding=3,
-                    foreground=bgcolors['background'],
-                ), 
-
-
-               #Widget for clock
-                widget.TextBox(
-                    text=left,
-                    background=bgcolors['background'],
-                    foreground=bgcolors[3],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    ),
-                widget.TextBox(
-                    text="",
-                    background=bgcolors[3],
-                    foreground=bgcolors[0],
-                    padding=7,
-                    fontsize = 19,
-                    font=symbols_font,
-                    ),
-                widget.Clock(
-                    #widget.Clock(format="  ~   %d / %m / %Y   %H:%M  -  %A   "),
-                    format="%H:%M",
-                    foreground=bgcolors[0],
-                    background=bgcolors[3],
-                    padding=5,
-                    ),
-                widget.TextBox(
-                    text=right,
-                    background=bgcolors['background'],
-                    foreground=bgcolors[3],
-                    padding=0,
-                    fontsize = size,
-                    font=symbols_font,
-                    ),               
-
-
-                widget.TextBox(
-                    text="-",
-                    padding=3,
-                    foreground=bgcolors['background'],
-                    ),                
-
-
-
-                #Arch Icon
-                widget.TextBox(
-                    text=left,
-                    font=symbols_font,
-                    foreground=bgcolors[5],
-                    background=bgcolors['background'],
-                    padding=0,
-                    fontsize = size,
-                    ),
-                widget.TextBox(
-                    font=symbols_font,
-                    fontsize = 30,
-                    text='',
-                    background = bgcolors[5],
-                    foreground = bgcolors[0],
-                    padding = 0,
-                    ),
-                widget.TextBox(
-                    text=right,
-                    font=symbols_font,
-                    foreground=bgcolors[5],
-                    background=bgcolors['background'],
-                    padding=0,
-                    fontsize = size,
-                    ),
-                ],
-                22,
-                background = bgcolors['background'],
-                margin = [3,0,0,0],
-                border_color=bgcolors['background'],
-                border_width=7,
-            ),
-        ),
-    ]
 
 # Drag floating layouts.
 mouse = [
-        #Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    # Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+    Drag([mod], "Button3", lazy.window.set_size_floating(),
+         start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
@@ -501,8 +207,8 @@ bring_front_click = False
 cursor_warp = False
 
 floating_layout = layout.Floating(
-    border_focus = "#3f6e84",
-    border_normal = "#6b6b6b",
+    border_focus="#3f6e84",
+    border_normal="#6b6b6b",
     border_width=0,
 
     float_rules=[
