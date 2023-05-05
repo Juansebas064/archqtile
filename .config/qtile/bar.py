@@ -125,8 +125,8 @@ def desktopBar():
 
                     # RAM usage
                     # widgets.bubbleLeft(COLORS['background'], COLORS['cblue'], CALLBACKS['htop']),
-                    widgets.text(COLORS['cblue'], COLORS['cdark'], CALLBACKS['htop'],'󰍛'),
-                    widgets.invisibleSeparator(COLORS['background']),
+                    widgets.text(COLORS['cblue'], COLORS['cdark'], CALLBACKS['htop'],'  󰍛'),
+                    # widgets.invisibleSeparator(COLORS['background']),
 
                     widgets.RAMUsage(COLORS['cblue'], COLORS['cdark']),
 

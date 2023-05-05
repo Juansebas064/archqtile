@@ -21,7 +21,7 @@ decor = {
             radius=12,
             filled=True,
             use_widget_background=True,
-            group=False,
+            group=True,
         )
     ]
 }
@@ -93,7 +93,7 @@ def text(background, foreground, callbacks, text: dict = {}):
         fontsize=ICON_SIZE,
         background=background,
         foreground=foreground,
-        # offset=4,
+        padding=0,
         mouse_callbacks=callbacks,
         **decor,
     ))
@@ -145,6 +145,7 @@ def RAMUsage(background, foreground):
         mouse_callbacks={
             "Button2": lazy.spawn("alacritty -e htop")
         },
+        **decor,
     ))
 
 
