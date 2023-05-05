@@ -1,5 +1,5 @@
-from libqtile import bar, layout, widget
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile import layout
+from libqtile.config import Click, Drag, Group, Key, Match
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile import hook
@@ -126,7 +126,10 @@ keys = [
 
 ]
 
-groups = [Group(f"{i+1}", label="") for i in range(6)]
+groups = [Group(f"{i+1}", label="") for i in range(6)]
+
+
+#  
 
 for i in groups:
     keys.extend(
@@ -170,22 +173,6 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-left = ""
-right = ""
-symbols_font = 'MesloLGS NF'
-size = 18
-laptop_fontsize = 16
-
-bgcolors = {
-    'background': '#00000000',
-    0: '#1a1d1f',
-    1: '#34444c',
-    2: '#457c8a',
-    3: '#84b5cc',
-    4: '#894bb3',
-    5: '#ffffff'
-}
-
 if LAPTOP:
     screens = laptopBar()
 else:
@@ -193,12 +180,12 @@ else:
 
 
 # Drag floating layouts.
-mouse = [
-    # Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(),
-         start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front()),
-]
+# mouse = [
+#     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+#     Drag([mod], "Button3", lazy.window.set_size_floating(),
+#          start=lazy.window.get_size()),
+#     Click([mod], "Button2", lazy.window.bring_to_front()),
+# ]
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list

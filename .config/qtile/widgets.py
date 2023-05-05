@@ -1,32 +1,34 @@
 # Libraries needed
 
-from libqtile import widget
+from qtile_extras import widget
+from qtile_extras.widget.decorations import RectDecoration
 from libqtile.lazy import lazy
 
 
 # Constant variables
-LEFT = ""
+LEFT = "󱎕"
 RIGHT = ""
-SYMBOLS_FONT = 'MesloLGS NF'
-SYMBOLS_SIZE = 22
+SYMBOLS_FONT = 'Symbols Nerd Font'
+SYMBOLS_SIZE = 32
+ICON_SIZE = 20
 FONT_SIZE = 16
+WIDGETS_PADDING = 8
 
+
+decor = {
+    "decorations": [
+        RectDecoration(
+            radius=12,
+            filled=True,
+            use_widget_background=True,
+            group=False,
+        )
+    ]
+}
 
 ##################
 # Widget's icons #
 ##################
-
-
-# RAM
-def RAMIcon(background, foreground):
-    return (widget.TextBox(
-        font=SYMBOLS_FONT,
-        text='',
-        fontsize=19,
-        background=background,
-        foreground=foreground,
-        padding=6,
-    ))
 
 
 # Battery
@@ -83,6 +85,20 @@ def bubbleRight(background, foreground, callbacks: dict = {}):
     ))
 
 
+# Text box
+def text(background, foreground, callbacks, text: dict = {}):
+    return (widget.TextBox(
+        font=SYMBOLS_FONT,
+        text=text,
+        fontsize=ICON_SIZE,
+        background=background,
+        foreground=foreground,
+        # offset=4,
+        mouse_callbacks=callbacks,
+        **decor,
+    ))
+
+
 # Layout icon
 def layoutIcon(background, foreground):
     return (widget.CurrentLayoutIcon(
@@ -96,6 +112,7 @@ def layoutIcon(background, foreground):
 # Opened windows counter
 def windowCounter():
     return widget.WindowCount(
+        fontsize=FONT_SIZE,
         show_zero=True,
         padding=10,
     )
@@ -104,7 +121,8 @@ def windowCounter():
 # Virtual desktop indicator
 def desktopIndicator(background, current_desktop, active_desktop, inactive_desktop):
     return (widget.GroupBox(
-        fontsize=FONT_SIZE,
+        font='Symbols Nerd Font',
+        fontsize=22,
         highlight_method='text',
         this_current_screen_border=current_desktop,     # Current desktop
         active=active_desktop,                          # Active desktop
@@ -123,16 +141,16 @@ def RAMUsage(background, foreground):
         measure_mem='G',
         background=background,
         foreground=foreground,
-        padding=4,
+        padding=WIDGETS_PADDING,
         mouse_callbacks={
             "Button2": lazy.spawn("alacritty -e htop")
-        }
+        },
     ))
 
 
 # System tray
 def systemTray():
-    return widget.Systray(padding=4)
+    return widget.Systray(padding=6)
 
 
 # Battery level
@@ -143,7 +161,7 @@ def battery(background, foreground, lowForeground):
         background=background,
         foreground=foreground,
         low_foreground=lowForeground,
-        padding=4,
+        padding=WIDGETS_PADDING,
         update_interval=3,
     ))
 
@@ -154,7 +172,7 @@ def volume(background, foreground):
         fontsize=FONT_SIZE,
         background=background,
         foreground=foreground,
-        padding=0,
+        padding=WIDGETS_PADDING,
         mouse_callbacks={
             "Button2": lazy.spawn("pavucontrol")
         },
@@ -168,7 +186,7 @@ def date(background, foreground):
         fontsize=FONT_SIZE,
         background=background,
         foreground=foreground,
-        padding=4,
+        padding=WIDGETS_PADDING,
         mouse_callbacks={
             "Button1": lazy.spawn("gsimplecal")
         },
@@ -182,5 +200,5 @@ def clock(background, foreground):
         fontsize=FONT_SIZE,
         background=background,
         foreground=foreground,
-        padding=5,
+        padding=WIDGETS_PADDING,
     ))
