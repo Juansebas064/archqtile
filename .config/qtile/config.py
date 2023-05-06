@@ -6,14 +6,10 @@ from libqtile import hook
 import subprocess
 import platform
 
-from bar import laptopBar, desktopBar
+from bar import qtileBar
 
 hostname = platform.uname().node
 MARGIN = 8
-
-
-LAPTOP = True if subprocess.call(
-    "[ -d /proc/acpi/button/lid ] && true || false", shell=True) == 0 else False
 
 
 @hook.subscribe.startup_once
@@ -60,7 +56,7 @@ keys = [
     Key([], "Print", lazy.spawn("xfce4-screenshooter -f -c")),
     Key(["control"], "Print", lazy.spawn("xfce4-screenshooter -w -c")),
     Key(["shift"], "Print", lazy.spawn("xfce4-screenshooter -r -c")),
-    # Key([mod], "r", lazy.spawn("ulauncher"), desc="Spawn ulauncher"),
+    Key([mod], "r", lazy.spawn("ulauncher"), desc="Run ulauncher"),
 
     # Keybindings for media control
     Key([], "XF86AudioRaiseVolume", lazy.spawn(
@@ -126,6 +122,7 @@ keys = [
 
 ]
 
+
 groups = [Group(f"{i+1}", label="") for i in range(6)]
 
 
@@ -173,10 +170,7 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-if LAPTOP:
-    screens = laptopBar()
-else:
-    screens = desktopBar()
+screens = qtileBar()
 
 
 # Drag floating layouts.

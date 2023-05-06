@@ -1,30 +1,35 @@
 # Libraries needed
-
 from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 from libqtile.lazy import lazy
 
 
 # Constant variables
-LEFT = "󱎕"
-RIGHT = ""
 SYMBOLS_FONT = 'Symbols Nerd Font'
 SYMBOLS_SIZE = 32
 ICON_SIZE = 20
 FONT_SIZE = 16
-WIDGETS_PADDING = 8
+WIDGETS_PADDING = 9
 
 
-decor = {
-    "decorations": [
-        RectDecoration(
-            radius=12,
-            filled=True,
-            use_widget_background=True,
-            group=True,
-        )
-    ]
-}
+# Decorations for widgets
+def decor(side):
+    radius = {
+        'left': [12,0,0,12],
+        'right': [0,12,12,0],
+        'both': 12
+    }
+    return (
+        {"decorations": [
+            RectDecoration(
+                radius=radius[side],
+                filled=True,
+                use_widget_background=True,
+                group=True,
+            )
+        ]}
+    )
+
 
 ##################
 # Widget's icons #
@@ -59,34 +64,8 @@ def invisibleSeparator(foreground):
     ))
 
 
-# Bubble left
-def bubbleLeft(background, foreground, callbacks: dict = {}):
-    return (widget.TextBox(
-        font=SYMBOLS_FONT,
-        text=LEFT,
-        fontsize=SYMBOLS_SIZE,
-        background=background,
-        foreground=foreground,
-        padding=0,
-        mouse_callbacks=callbacks,
-    ))
-
-
-# Bubble right
-def bubbleRight(background, foreground, callbacks: dict = {}):
-    return (widget.TextBox(
-        font=SYMBOLS_FONT,
-        text=RIGHT,
-        fontsize=SYMBOLS_SIZE,
-        background=background,
-        foreground=foreground,
-        padding=0,
-        mouse_callbacks=callbacks,
-    ))
-
-
 # Text box
-def text(background, foreground, callbacks, text: dict = {}):
+def text(background, foreground, text, side, callbacks: dict = {}):
     return (widget.TextBox(
         font=SYMBOLS_FONT,
         text=text,
@@ -95,7 +74,7 @@ def text(background, foreground, callbacks, text: dict = {}):
         foreground=foreground,
         padding=0,
         mouse_callbacks=callbacks,
-        **decor,
+        **decor(side),
     ))
 
 
@@ -145,7 +124,7 @@ def RAMUsage(background, foreground):
         mouse_callbacks={
             "Button2": lazy.spawn("alacritty -e htop")
         },
-        **decor,
+        **decor('right'),
     ))
 
 
