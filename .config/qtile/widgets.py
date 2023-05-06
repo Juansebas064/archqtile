@@ -84,7 +84,7 @@ def layoutIcon(background, foreground):
         background=background,
         foreground=foreground,
         padding=7,
-        scale=0.8,
+        scale=0.65,
     ))
 
 
@@ -101,7 +101,7 @@ def windowCounter():
 def desktopIndicator(background, current_desktop, active_desktop, inactive_desktop):
     return (widget.GroupBox(
         font='Symbols Nerd Font',
-        fontsize=22,
+        fontsize=21,
         highlight_method='text',
         this_current_screen_border=current_desktop,     # Current desktop
         active=active_desktop,                          # Active desktop

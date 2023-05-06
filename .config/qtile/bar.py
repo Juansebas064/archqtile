@@ -44,6 +44,8 @@ CALLBACKS = {
 def laptopWidgets():
     if (LAPTOP):
         return (widgets.battery(COLORS['cpurple'], COLORS['cwhite'], COLORS['cwhite']))
+    else:
+        return (widgets.invisibleSeparator(COLORS['background']))
 
 
 # Bar
@@ -52,19 +54,24 @@ def qtileBar():
         Screen(
             bottom=bar.Bar(
                 [
+
+                    widgets.invisibleSeparator(COLORS['background']),
+
                     # Layout icon
                     widgets.layoutIcon(COLORS['background'], COLORS['cwhite']),
 
                     widgets.invisibleSeparator(COLORS['background']),
 
                     # Windows opened
+                    widgets.text(
+                        COLORS['background'], COLORS['cwhite'], '󱂬', 'left', CALLBACKS['htop']),
                     widgets.windowCounter(),
 
                     widgets.invisibleSeparator(COLORS['background']),
 
                     # Desktop indicator
                     widgets.desktopIndicator(
-                        COLORS['background'], COLORS['cpurple'], COLORS['cwhite'], COLORS['caquamarine']),
+                        COLORS['background'], COLORS['cwhite'], COLORS['caquamarine'], COLORS['cgray']),
 
                     widgets.invisibleSeparator(COLORS['background']),
 
