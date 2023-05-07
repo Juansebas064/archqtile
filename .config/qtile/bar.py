@@ -4,6 +4,14 @@ from libqtile.lazy import lazy
 from libqtile.config import Screen
 import subprocess
 import widgets
+from libqtile import qtile
+# from libqtile import hook
+# from libqtile.backend.x11 import window
+
+
+# @hook.subscribe.client_focus
+# def windowName(window.win) -> str:
+#     return widgets.text(COLORS['background'], COLORS['cwhite'], , 'both')
 
 
 # Verify if the host is a laptop or desktop
@@ -46,13 +54,15 @@ def qtileBar():
         Screen(
             bottom=bar.Bar(
                 [
-
                     widgets.invisibleSeparator(COLORS['background']),
-
-                    # widgets.invisibleSeparator(COLORS['background']),
 
                     # System tray
                     widgets.systemTray(),
+
+                    widgets.invisibleSeparator(COLORS['background']),
+
+                    # Window name
+                    widgets.windowName(),
 
                     # Spacer
                     widgets.spacer(),
@@ -68,12 +78,11 @@ def qtileBar():
                     widgets.text(
                         COLORS['cred'], COLORS['background'], 'h', 'right'),
 
-                    # widgets.invisibleSeparator(COLORS['background']),
 
                     # Windows opened
                     widgets.windowCounter(),
                     widgets.text(
-                        COLORS['background'], COLORS['cwhite'], '󱂬', 'left', CALLBACKS['htop']),
+                        COLORS['background'], COLORS['cwhite'], '󱂬', 'left'),
 
                     # Spacer
                     widgets.spacer(),

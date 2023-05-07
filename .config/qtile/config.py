@@ -3,6 +3,7 @@ from libqtile.config import Click, Drag, Group, Key, Match
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile import hook
+from libqtile import qtile
 import subprocess
 import platform
 
@@ -28,6 +29,27 @@ def autostart():
         subprocess.Popen(p)
 
 
+# This works when a window is assigned to a desktop and it's opened
+@hook.subscribe.client_managed
+def show_window(window):
+    window.group.cmd_toscreen()
+
+
+# Function to disable fullscreen when a popup dialog appears
+@hook.subscribe.group_window_add
+def dropdown_manager(group, window):
+    if window.name in ["Enter name of file to save to…", 'Ulauncher - Application Launcher', 'Save As']:
+        # Dropdown opened, disable full screen for windows in this group and save in function property
+        all_group_windows: list() = qtile.select(
+            [("group", group.name)]
+        ).windows
+        for group_window in all_group_windows:
+            if group_window.info()["fullscreen"]:
+                wid = group_window.info()["id"]
+                qtile.select([("window", wid)]).cmd_disable_fullscreen()
+                dropdown_manager.fullscreen_to_restore.append(wid)
+
+
 hostname = platform.uname().node
 MARGIN = 8
 mod = "mod4"
@@ -37,11 +59,12 @@ keys = keybindings()
 
 
 groups = [
-    Group(name="1", label="󰈹"),
-    Group(name="2", label=""),
-    Group(name="3", label="󱞁"),
-    Group(name="4", label=""),
-    Group(name="5", label="󰋎"),
+    Group(name="1", label="󰈹", matches=[Match(wm_class=["firefox"])]),
+    Group(name="2", label="", matches=[Match(wm_class=["code"])]),
+    Group(name="3", label="󱞁", matches=[Match(wm_class=["joplin"])]),
+    Group(name="4", label="", matches=[Match(wm_class=["telegram-desktop"]),
+                                        Match(wm_class=["whatsapp-nativefier"])]),
+    Group(name="5", label="󰋎", matches=[Match(wm_class=["discord"])]),
     Group(name="6", label="")
 ]
 
@@ -124,6 +147,7 @@ floating_layout = layout.Floating(
         Match(wm_class='blueman-manager'),
         Match(wm_class='gcolor3'),
         Match(wm_class='pavucontrol'),
+        Match(title='Enter name of file to save to…'),
     ]
 )
 auto_fullscreen = True

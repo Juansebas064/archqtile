@@ -2,6 +2,11 @@
 from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 from libqtile.lazy import lazy
+from qtile_extras.popup.toolkit import (
+    PopupGridLayout,
+    PopupWidget
+)
+from libqtile import qtile
 
 
 # Constant variables
@@ -15,8 +20,8 @@ WIDGETS_PADDING = 9
 # Decorations for widgets
 def decor(side):
     radius = {
-        'left': [12,0,0,12],
-        'right': [0,12,12,0],
+        'left': [12, 0, 0, 12],
+        'right': [0, 12, 12, 0],
         'both': 12
     }
     return (
@@ -29,6 +34,17 @@ def decor(side):
             )
         ]}
     )
+
+
+# Function to shorten window names
+def longNameParse(text):
+    # Add any other apps that have long names here
+    for string in ["Chromium", "Firefox", "Visual Studio Code", "Alacritty", "Telegram"]:
+        if string in text:
+            text = string
+        else:
+            text = text
+    return text
 
 
 ##################
@@ -86,6 +102,14 @@ def layoutIcon(background, foreground):
         padding=7,
         scale=0.65,
     ))
+
+
+# Window name
+def windowName():
+    return widget.WindowName(
+        fontsize=FONT_SIZE,
+        parse_text=longNameParse,
+    )
 
 
 # Opened windows counter

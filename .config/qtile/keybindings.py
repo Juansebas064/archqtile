@@ -70,11 +70,11 @@ def keybindings():
     # will be to screen edge - window would shrink.
     Key([mod], "m", lazy.layout.grow(), desc="Grow window to the left"),
     Key([mod], "n", lazy.layout.shrink(), desc="Grow window to the right"),
+    Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Fullscreen a window"),
     # Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     # Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod], "space", lazy.layout.normalize(), desc="Reset all window sizes"),
-    Key([mod, "control"], "space", lazy.layout.set_ratio(
-        0.5), desc="Default ratio"),
+    Key([mod], "space", lazy.layout.set_ratio(
+        0.5), lazy.layout.normalize(), desc="Default ratio"),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed

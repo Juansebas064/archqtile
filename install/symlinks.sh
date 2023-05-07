@@ -1,6 +1,6 @@
 cd ~
 rm -r ~/.fonts ~/.icons ~/.themes 
-rm -r ~/.config/{alacritty,gtk-2.0,gtk-3.0,nitrogen,nvim,picom,qtile,Thunar,xfce4,ulauncher}
+rm -r ~/.config/{alacritty,gtk-2.0,gtk-3.0,nitrogen,nvim,picom,qtile,Thunar,xfce4,ulauncher, libinput-gestures.conf}
 
 
 ln -s ~/archqtile/.config/alacritty/ ~/.config/
@@ -13,6 +13,7 @@ ln -s ~/archqtile/.config/qtile/ ~/.config
 ln -s ~/archqtile/.config/Thunar/ ~/.config
 ln -s ~/archqtile/.config/xfce4/ ~/.config/
 ln -s ~/archqtile/.config/ulauncher ~/.config
+ln -s ~/archqtile/.config/libinput-gestures.conf ~/.config
 
 ln -s ~/archqtile/.fonts/ ~
 ln -s ~/archqtile/.icons/ ~
@@ -26,6 +27,4 @@ sudo mkdir /usr/share/backgrounds/
 sudo cp ~/archqtile/login.jpg /usr/share/backgrounds/
 
 cp -r ~/archqtile/.local/ ~
-
-nitrogen --set-auto ~/archqtile/snow.jpg
 
