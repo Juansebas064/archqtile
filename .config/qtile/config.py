@@ -41,7 +41,7 @@ groups = [
     Group(name="2", label=""),
     Group(name="3", label="󱞁"),
     Group(name="4", label=""),
-    Group(name="5", label="󰙯"),
+    Group(name="5", label="󰋎"),
     Group(name="6", label="")
 ]
 

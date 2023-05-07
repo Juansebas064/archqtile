@@ -15,18 +15,10 @@ LAPTOP = True if subprocess.call(
 COLORS = {
     'background': '#1a1d1f00',
     'cwhite': '#ffffff',
-    'cdark': '#1a1d1f',
-    'cgray': '#34444c',
-    'caquamarine': '#457c8a',
-    'cblue': '#84b5cc',
-    'cpurple': '#894bb3'
-}
-
-COLORS2 = {
-    'background': '#1a1d1f00',
-    'cwhite': '#ffffff',
-    'cdark': '#1a1d1f',
-    'cgray': '#34444c',
+    'cdark': '#000000',
+    'cred': '#bd3752',
+    'cskin': '#11263b',
+    'cgray': '#1d262a',
     'caquamarine': '#457c8a',
     'cblue': '#84b5cc',
     'cpurple': '#894bb3'
@@ -40,7 +32,7 @@ CALLBACKS = {
 }
 
 
-#Function to show battery level only if it's a laptop
+# Function to show battery level only if it's a laptop
 def laptopWidgets():
     if (LAPTOP):
         return (widgets.battery(COLORS['cpurple'], COLORS['cwhite'], COLORS['cwhite']))
@@ -57,26 +49,31 @@ def qtileBar():
 
                     widgets.invisibleSeparator(COLORS['background']),
 
-                    # Layout icon
-                    widgets.layoutIcon(COLORS['background'], COLORS['cwhite']),
-
-                    widgets.invisibleSeparator(COLORS['background']),
-
-                    # Windows opened
-                    widgets.text(
-                        COLORS['background'], COLORS['cwhite'], '󱂬', 'left', CALLBACKS['htop']),
-                    widgets.windowCounter(),
-
-                    widgets.invisibleSeparator(COLORS['background']),
-
-                    # Desktop indicator
-                    widgets.desktopIndicator(
-                        COLORS['background'], COLORS['cwhite'], COLORS['caquamarine'], COLORS['cgray']),
-
-                    widgets.invisibleSeparator(COLORS['background']),
+                    # widgets.invisibleSeparator(COLORS['background']),
 
                     # System tray
                     widgets.systemTray(),
+
+                    # Spacer
+                    widgets.spacer(),
+
+                    # Layout icon
+                    widgets.layoutIcon(COLORS['background'], COLORS['cwhite']),
+
+                    # Desktop indicator
+                    widgets.text(
+                        COLORS['cred'], COLORS['background'], 'h', 'left'),
+                    widgets.desktopIndicator(
+                        COLORS['cred'], COLORS['cwhite'], COLORS['cskin'], COLORS['cdark']),
+                    widgets.text(
+                        COLORS['cred'], COLORS['background'], 'h', 'right'),
+
+                    # widgets.invisibleSeparator(COLORS['background']),
+
+                    # Windows opened
+                    widgets.windowCounter(),
+                    widgets.text(
+                        COLORS['background'], COLORS['cwhite'], '󱂬', 'left', CALLBACKS['htop']),
 
                     # Spacer
                     widgets.spacer(),
@@ -85,7 +82,7 @@ def qtileBar():
                     laptopWidgets(),
 
                     widgets.invisibleSeparator(COLORS['background']),
-                    
+
                     # RAM usage
                     widgets.text(
                         COLORS['cblue'], COLORS['cdark'], '  󰍛', 'left', CALLBACKS['htop']),
