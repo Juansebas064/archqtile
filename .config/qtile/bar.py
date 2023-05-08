@@ -5,13 +5,6 @@ from libqtile.config import Screen
 import subprocess
 import widgets
 from libqtile import qtile
-# from libqtile import hook
-# from libqtile.backend.x11 import window
-
-
-# @hook.subscribe.client_focus
-# def windowName(window.win) -> str:
-#     return widgets.text(COLORS['background'], COLORS['cwhite'], , 'both')
 
 
 # Verify if the host is a laptop or desktop
@@ -23,17 +16,17 @@ LAPTOP = True if subprocess.call(
 COLORS = {
     'background': '#1a1d1f00',
     'cwhite': '#ffffff',
-    'cdark': '#000000',
+    'cblack': '#000000',
     'cred': '#bd3752',
-    'cskin': '#11263b',
+    'cdark_blue': '#1f2851',
     'cgray': '#1d262a',
-    'caquamarine': '#457c8a',
-    'cblue': '#84b5cc',
+    'cblue': '#3572a5',
+    'corange': '#ffa030',
     'cpurple': '#894bb3'
 }
 
 
-# Callbacks
+# Callbacks for widgets
 CALLBACKS = {
     'htop': {"Button2": lazy.spawn("alacritty -e htop")},
     'pavucontrol': {"Button2": lazy.spawn("pavucontrol")}
@@ -74,7 +67,7 @@ def qtileBar():
                     widgets.text(
                         COLORS['cred'], COLORS['background'], 'h', 'left'),
                     widgets.desktopIndicator(
-                        COLORS['cred'], COLORS['cwhite'], COLORS['cskin'], COLORS['cdark']),
+                        COLORS['cred'], COLORS['cwhite'], COLORS['cdark_blue'], COLORS['cblack']),
                     widgets.text(
                         COLORS['cred'], COLORS['background'], 'h', 'right'),
 
@@ -94,14 +87,14 @@ def qtileBar():
 
                     # RAM usage
                     widgets.text(
-                        COLORS['cblue'], COLORS['cdark'], '  󰍛', 'left', CALLBACKS['htop']),
+                        COLORS['corange'], COLORS['cblack'], '  󰍛', 'left', CALLBACKS['htop']),
 
-                    widgets.RAMUsage(COLORS['cblue'], COLORS['cdark']),
+                    widgets.RAMUsage(COLORS['corange'], COLORS['cblack']),
 
                     widgets.invisibleSeparator(COLORS['background']),
 
                     # Volume level
-                    widgets.volume(COLORS['caquamarine'], COLORS['cwhite']),
+                    widgets.volume(COLORS['cblue'], COLORS['cwhite']),
 
                     # widgets.invisibleSeparator(COLORS['background']),
 
@@ -111,11 +104,11 @@ def qtileBar():
                     # widgets.invisibleSeparator(COLORS['background']),
 
                     # Clock
-                    widgets.clock(COLORS['cwhite'], COLORS['cdark']),
+                    widgets.clock(COLORS['cwhite'], COLORS['cblack']),
                 ],
                 25,
                 background=COLORS['background'],
-                margin=[2, 0, 8, 0],
+                margin=[2, 0, 4, 0],
                 border_color=COLORS['background'],
                 border_width=0,
             ),

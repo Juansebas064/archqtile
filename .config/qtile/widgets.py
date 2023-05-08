@@ -2,10 +2,6 @@
 from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration
 from libqtile.lazy import lazy
-from qtile_extras.popup.toolkit import (
-    PopupGridLayout,
-    PopupWidget
-)
 from libqtile import qtile
 
 
@@ -39,7 +35,7 @@ def decor(side):
 # Function to shorten window names
 def longNameParse(text):
     # Add any other apps that have long names here
-    for string in ["Chromium", "Firefox", "Visual Studio Code", "Alacritty", "Telegram"]:
+    for string in ["Chromium", "Firefox", "Visual Studio Code", "Alacritty", "Telegram", "Thunar", "Ulauncher"]:
         if string in text:
             text = string
         else:
@@ -125,14 +121,14 @@ def windowCounter():
 def desktopIndicator(background, current_desktop, active_desktop, inactive_desktop):
     return (widget.GroupBox(
         font='Symbols Nerd Font',
-        fontsize=21,
+        fontsize=22,
         highlight_method='text',
         this_current_screen_border=current_desktop,     # Current desktop
         active=active_desktop,                          # Active desktop
         inactive=inactive_desktop,                      # Empty desktop
         background=background,
         borderwidth=2,
-        padding=1,
+        padding=2,
     ))
 
 

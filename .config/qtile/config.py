@@ -1,7 +1,6 @@
 from libqtile import layout
 from libqtile.config import Click, Drag, Group, Key, Match
 from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
 from libqtile import hook
 from libqtile import qtile
 import subprocess
@@ -151,7 +150,7 @@ floating_layout = layout.Floating(
     ]
 )
 auto_fullscreen = True
-focus_on_window_activation = "smart"
+focus_on_window_activation = "urgent"
 reconfigure_screens = True
 
 # If things like steam games want to auto-minimize themselves when losing
