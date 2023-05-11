@@ -17,12 +17,13 @@ COLORS = {
     'background': '#1a1d1f00',
     'cwhite': '#ffffff',
     'cblack': '#000000',
-    'cred': '#bd3752',
+    'cred': '#b82e66',
     'cdark_blue': '#1f2851',
     'cgray': '#1d262a',
-    'cblue': '#3572a5',
-    'corange': '#ffa030',
-    'cpurple': '#894bb3'
+    'cblue': '#1762a6',
+    'corange': '#d96348',
+    'cpurple': '#7a0b4f',
+    'cgreen': '#3d8a6d'
 }
 
 
@@ -34,11 +35,25 @@ CALLBACKS = {
 
 
 # Function to show battery level only if it's a laptop
-def laptopWidgets():
+def helperBatteryWidget():
     if (LAPTOP):
-        return (widgets.battery(COLORS['cpurple'], COLORS['cwhite'], COLORS['cwhite']))
+        return (widgets.text(COLORS['cgreen'], COLORS['background'], 'h', 'left'))
     else:
-        return (widgets.invisibleSeparator(COLORS['background']))
+        return (widgets.text(COLORS['background'], COLORS['background'], '', 'right'))
+
+
+def batteryWidget():
+    if (LAPTOP):
+        return (widgets.battery(COLORS['cgreen'], COLORS['cwhite'], COLORS['cwhite'], 'right'))
+    else:
+        return (widgets.text(COLORS['background'], COLORS['background'], '', 'right'))
+
+
+def batteryIconWidget():
+    if (LAPTOP):
+        return (widgets.batteryIcon(COLORS['cgreen'], COLORS['cwhite'], 'left'))
+    else:
+        return (widgets.text(COLORS['background'], COLORS['background'], '', 'both'))
 
 
 # Bar
@@ -49,10 +64,20 @@ def qtileBar():
                 [
                     widgets.invisibleSeparator(COLORS['background']),
 
+                    # Battery (only for laptop)
+                    helperBatteryWidget(),
+                    batteryIconWidget(),
+                    batteryWidget(),
+
+                    widgets.invisibleSeparator(COLORS['background']),
+
                     # System tray
                     widgets.systemTray(),
 
-                    widgets.invisibleSeparator(COLORS['background']),
+                    widgets.text(
+                        COLORS['background'], COLORS['cwhite'], '     ', 'both'),
+
+                    # widgets.invisibleSeparator(COLORS['background']),
 
                     # Window name
                     widgets.windowName(),
@@ -63,14 +88,15 @@ def qtileBar():
                     # Layout icon
                     widgets.layoutIcon(COLORS['background'], COLORS['cwhite']),
 
+                    ####
                     # Desktop indicator
                     widgets.text(
-                        COLORS['cred'], COLORS['background'], 'h', 'left'),
+                        COLORS['corange'], COLORS['background'], 'h', 'left'),
                     widgets.desktopIndicator(
-                        COLORS['cred'], COLORS['cwhite'], COLORS['cdark_blue'], COLORS['cblack']),
+                        COLORS['corange'], COLORS['cwhite'], COLORS['cdark_blue'], COLORS['cblack']),
                     widgets.text(
-                        COLORS['cred'], COLORS['background'], 'h', 'right'),
-
+                        COLORS['corange'], COLORS['background'], 'h', 'right'),
+                    ####
 
                     # Windows opened
                     widgets.windowCounter(),
@@ -80,31 +106,30 @@ def qtileBar():
                     # Spacer
                     widgets.spacer(),
 
-                    # Battery (only for laptop)
-                    laptopWidgets(),
-
                     widgets.invisibleSeparator(COLORS['background']),
 
                     # RAM usage
                     widgets.text(
-                        COLORS['corange'], COLORS['cblack'], '  󰍛', 'left', CALLBACKS['htop']),
+                        COLORS['cred'], COLORS['cwhite'], '  󱕍', 'left', CALLBACKS['htop']),
 
-                    widgets.RAMUsage(COLORS['corange'], COLORS['cblack']),
+                    widgets.RAMUsage(COLORS['cred'], COLORS['cwhite']),
 
                     widgets.invisibleSeparator(COLORS['background']),
 
                     # Volume level
+                    widgets.text(COLORS['cblue'], COLORS['background'], 'L', 'left'),
+                    widgets.volumeIcon(COLORS['cblue'], COLORS['cwhite']),
                     widgets.volume(COLORS['cblue'], COLORS['cwhite']),
 
-                    # widgets.invisibleSeparator(COLORS['background']),
+                    widgets.invisibleSeparator(COLORS['background']),
 
                     # Date
-                    widgets.date(COLORS['cgray'], COLORS['cwhite']),
+                    widgets.date(COLORS['cpurple'], COLORS['cwhite']),
 
                     # widgets.invisibleSeparator(COLORS['background']),
 
                     # Clock
-                    widgets.clock(COLORS['cwhite'], COLORS['cblack']),
+                    widgets.clock(COLORS['cgreen'], COLORS['cblack']),
                 ],
                 25,
                 background=COLORS['background'],

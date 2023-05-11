@@ -35,7 +35,7 @@ def decor(side):
 # Function to shorten window names
 def longNameParse(text):
     # Add any other apps that have long names here
-    for string in ["Chromium", "Firefox", "Visual Studio Code", "Alacritty", "Telegram", "Thunar", "Ulauncher"]:
+    for string in ["Chromium", "Firefox", "Visual Studio Code", "Alacritty", "Telegram", "Thunar", "Ulauncher", "Google Chrome", "OBS", "Discord"]:
         if string in text:
             text = string
         else:
@@ -49,11 +49,28 @@ def longNameParse(text):
 
 
 # Battery
-def batteryIcon(background):
+def batteryIcon(background, foreground, side):
     return (widget.BatteryIcon(
         theme_path='~/.icons/Colloid-teal-dark/status/24/',
+        foreground=foreground,
         background=background,
         scale=1,
+        padding=4,
+        **decor(side)
+    ))
+
+
+# Volume
+def volumeIcon(background, foreground):
+    return (widget.Volume(
+        background=background,
+        foreground=foreground,
+        theme_path='~/.icons/Colloid-teal-dark/status/24/',
+        padding=0,
+        mouse_callbacks={
+            "Button2": lazy.spawn("pavucontrol")
+        },
+        **decor('left')
     ))
 
 
@@ -104,6 +121,8 @@ def layoutIcon(background, foreground):
 def windowName():
     return widget.WindowName(
         fontsize=FONT_SIZE,
+        width=200,
+        empty_group_string='Desktop',
         parse_text=longNameParse,
     )
 
@@ -150,11 +169,11 @@ def RAMUsage(background, foreground):
 
 # System tray
 def systemTray():
-    return widget.Systray(padding=6)
+    return widget.Systray(padding=3)
 
 
 # Battery level
-def battery(background, foreground, lowForeground):
+def battery(background, foreground, lowForeground, side):
     return (widget.Battery(
         format='{percent:2.0%}',
         fontsize=FONT_SIZE,
@@ -163,6 +182,7 @@ def battery(background, foreground, lowForeground):
         low_foreground=lowForeground,
         padding=WIDGETS_PADDING,
         update_interval=3,
+        **decor(side)
     ))
 
 
@@ -176,13 +196,14 @@ def volume(background, foreground):
         mouse_callbacks={
             "Button2": lazy.spawn("pavucontrol")
         },
+        **decor('right')
     ))
 
 
 # Date
 def date(background, foreground):
     return (widget.Clock(
-        format="%d/%m/%Y",
+        format="%d/%m/%y",
         fontsize=FONT_SIZE,
         background=background,
         foreground=foreground,

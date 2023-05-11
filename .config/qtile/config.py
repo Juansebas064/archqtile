@@ -61,8 +61,8 @@ groups = [
     Group(name="1", label="󰈹", matches=[Match(wm_class=["firefox"])]),
     Group(name="2", label="", matches=[Match(wm_class=["code"])]),
     Group(name="3", label="󱞁", matches=[Match(wm_class=["joplin"])]),
-    Group(name="4", label="", matches=[Match(wm_class=["telegram-desktop"]),
-                                        Match(wm_class=["whatsapp-nativefier"])]),
+    Group(name="4", label="", matches=[
+        Match(wm_class=["telegram-desktop", "whatsapp-nativefier-d40211"])]),
     Group(name="5", label="󰋎", matches=[Match(wm_class=["discord"])]),
     Group(name="6", label="")
 ]
