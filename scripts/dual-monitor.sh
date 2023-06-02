@@ -1,6 +1,6 @@
 source=$(xrandr | grep ' connected' | grep 'HDMI' | awk '{print $1}')
 
-if [ $source = 'HDMI1' ]
+if [ $source = 'HDMI-1' ]
 then   
     xrandr --output eDP-1 --mode 1368x768 --pos 1368x0 --output HDMI-1 --auto --above eDP-1
     qtile cmd-obj -o cmd -f restart
